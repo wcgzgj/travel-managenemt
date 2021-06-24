@@ -17,6 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PageResp<T> {
+    private Integer pageNum;
+    private Integer pageSize;
     /**
      * 记录后端分页查询后，查询出的总个数
      */
