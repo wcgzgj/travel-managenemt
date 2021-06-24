@@ -40,8 +40,11 @@
                              targetPackage="travelManagement.mapper"
                              type="XMLMAPPER"/>
 
-        <!--<table tableName="demo" domainObjectName="Demo"/>-->
-        <!--<table tableName="bill_"/>-->
+        <table tableName="tab_category"/>
+        <table tableName="tab_route"/>
+        <table tableName="tab_route_img"/>
+        <table tableName="tab_seller"/>
+        <table tableName="tab_user"/>
         <!--<table tableName="bill_type_"/>-->
         <!--<table tableName="category"/>-->
         <!--<table tableName="doc"/>-->
