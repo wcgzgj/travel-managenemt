@@ -1,0 +1,27 @@
+server:
+  port: 8880
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/travel-management?useUnicode=true&characterEncoding=utf-8
+    username: admin
+    password: 123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  thymeleaf:
+    cache: false
+
+
+# 整合Mybatis
+mybatis:
+  # ** 表示在mapper下不管有多少文件夹，都可以全部识别
+  mapper-locations: classpath:/mapper/**/*.xml
+  type-aliases-package: picUpload.pojo
+  #  打印sql相关的日志信息
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+file:
+  dis-path: /Users/faro_z/Pictures/pic-db/
+  web-path: http://127.0.0.1:8880/pic-db/
