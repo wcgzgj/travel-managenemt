@@ -2,6 +2,9 @@ package travelManagement.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.catalina.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import travelManagement.mapper.TabUserMapper;
 import travelManagement.pojo.TabUser;
@@ -34,6 +37,8 @@ public class UserServiceImpl implements UserService {
     @Resource
     private TabUserMapper tabUserMapper;
 
+    private static final Logger LOG= LoggerFactory.getLogger(UserServiceImpl.class);
+
 
     @Override
     public PageResp list(UserQueryReq req) {
@@ -42,19 +47,22 @@ public class UserServiceImpl implements UserService {
         String name = req.getName();
         String email = req.getEmail();
 
+        LOG.info("name为:{}",name);
+        LOG.info("email为:{}",email);
+
+
         TabUserExample tabUserExample = new TabUserExample();
         TabUserExample.Criteria criteria = tabUserExample.createCriteria();
-        if (StringUtil.isEmpty(name)) {
+        if (!StringUtil.isEmpty(name)) {
             criteria.andNameLike("%"+name+"%");
         }
-        if (StringUtil.isEmpty(email)) {
+        if (!StringUtil.isEmpty(email)) {
             criteria.andEmailLike("%"+email+"%");
         }
 
-
         PageHelper.startPage(pageNum,pageSize);
         List<TabUser> users = tabUserMapper.selectByExample(tabUserExample);
-        PageInfo<TabUser> pageInfo = new PageInfo<>();
+        PageInfo<TabUser> pageInfo = new PageInfo<>(users);
 
         List<UserQueryResp> userQueryResps = CopyUtil.copyList(users, UserQueryResp.class);
 
@@ -64,17 +72,24 @@ public class UserServiceImpl implements UserService {
         pageResp.setPageSize(pageInfo.getPageSize());
         pageResp.setList(userQueryResps);
 
-
         return pageResp;
     }
 
     @Override
     public void deleteById(Long id) {
-
+        tabUserMapper.deleteByPrimaryKey(id);
     }
 
     @Override
     public void save(UserSaveReq req) {
-
+        Long id = req.getUid();
+        if (id==null) {
+            TabUser copy = CopyUtil.copy(req, TabUser.class);
+            copy.setUid(snowFlake.nextId());
+            tabUserMapper.insert(copy);
+        } else {
+            TabUser copy = CopyUtil.copy(req, TabUser.class);
+            tabUserMapper.updateByPrimaryKeySelective(copy);
+        }
     }
 }
