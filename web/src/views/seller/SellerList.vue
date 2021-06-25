@@ -7,13 +7,13 @@
         <h1 style="font-size: 30px">旅游公司管理</h1>
 
         商家名称:
-        <a-input v-model:value="searchUser.name" placeholder="商家名称" style="width: 140px"/>
+        <a-input v-model:value="searchSeller.sname" placeholder="商家名称" style="width: 140px"/>
 
         &nbsp;
         &nbsp;
 
         商家地址:
-        <a-input v-model:value="searchUser.email" placeholder="商家地址" style="width: 140px"/>
+        <a-input v-model:value="searchSeller.address" placeholder="商家地址" style="width: 140px"/>
 
         &nbsp;
         &nbsp;
@@ -39,7 +39,7 @@
         <!--table的分页信息，由 pagination 决定，pagination 在 js 中已经定义-->
         <a-table
                 :columns="columns"
-                :data-source="users"
+                :data-source="sellers"
                 :pagination="pagination"
         >
             <template #name="{ text }">
@@ -52,7 +52,7 @@
                         <a-button type="primary">
                           <!--跳转到修改页面-->
                             <!--传入账单信息-->
-                          <router-link :to="'/user-update?userId='+record.id">
+                          <router-link :to="'/seller-update?sellerId='+record.id">
                             修改
                           </router-link>
                         </a-button>
@@ -85,18 +85,18 @@
     const columns = [
         {
             title: '商家名称',
-            dataIndex: 'name',
-            key: 'name',
+            dataIndex: 'sname',
+            key: 'sname',
         },
         {
             title: '商家电话',
-            dataIndex: 'sex',
-            key: 'sex',
+            dataIndex: 'consphone',
+            key: 'consphone',
         },
         {
             title: '商家地址',
-            dataIndex: 'birthdayStr',
-            key: 'birthdayStr',
+            dataIndex: 'address',
+            key: 'address',
         },
         {
             title: '操作',
@@ -126,8 +126,17 @@
              * 用户查询信息
              */
             const searchSeller = ref({
-                name:"",
-                email:"",
+                /**
+                 * private Long sid;
+
+                 private String sname;
+
+                 private String consphone;
+
+                 private String address;
+                 */
+                sname:"",
+                address:"",
                 pageNum:1,
                 pageSize:5
             });
@@ -137,8 +146,8 @@
              * 点击以后，会去重置输入框中的内容
              */
             const reset = () => {
-                searchUser.value.name="";
-                searchUser.value.email="";
+                searchSeller.value.sname="";
+                searchSeller.value.address="";
             }
 
             /**
@@ -147,7 +156,7 @@
             const pagination = ref( {
                 onChange: page => {
                     console.log("点击的页码为:"+page);
-                    searchUser.value.pageNum=page;
+                    searchSeller.value.pageNum=page;
                     onSearch();
                 },
                 pageSize: 5,
@@ -159,21 +168,21 @@
             /**
              * 搜索函数
              */
-            const users = ref([]);
+            const sellers = ref([]);
             const onSearch = () => {
-                axios.get("/user/list",{
+                axios.get("/seller/list",{
                     params:{
-                        pageNum:searchUser.value.pageNum,
-                        pageSize:searchUser.value.pageSize,
-                        name:searchUser.value.name,
-                        email:searchUser.value.email
+                        pageNum:searchSeller.value.pageNum,
+                        pageSize:searchSeller.value.pageSize,
+                        sname:searchSeller.value.sname,
+                        address:searchSeller.value.address
                     }
                 }).then(resp=> {
                     const data = resp.data;
                     if (data.success) {
                         console.log("查询数据成功");
                         console.log("查询出的数据条数为:"+data.content.list.length);
-                        users.value=data.content.list;
+                        sellers.value=data.content.list;
                         console.log("传来的total值为:"+data.content.total);
                         // 修改分页信息中的 total 信息
                         pagination.value.total=data.content.total;
@@ -240,12 +249,12 @@
 
             return {
                 loading,
-                searchUser,
                 pagination,
                 reset,
-                users,
+                sellers,
                 columns,
-                onSearch
+                onSearch,
+                searchSeller
             };
         },
     }

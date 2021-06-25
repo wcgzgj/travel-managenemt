@@ -33,8 +33,6 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @Resource
-    private TabUserMapper tabUserMapper;
 
     @GetMapping("/list")
     public CommonResp list(UserQueryReq req) {
