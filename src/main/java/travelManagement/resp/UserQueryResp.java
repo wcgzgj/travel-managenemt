@@ -27,6 +27,8 @@ public class UserQueryResp {
 
     private Date birthday;
 
+    private String birthdayStr;
+
     private String sex;
 
     private String telephone;

@@ -23,6 +23,13 @@
         &nbsp;
         &nbsp;
         <a-button type="primary" :onclick="reset">重置</a-button>
+        &nbsp;
+        &nbsp;
+        <a-button type="primary" >
+            <router-link to="/user-add">
+                添加
+            </router-link>
+        </a-button>
 
         <br/>
         <br/>
@@ -45,7 +52,7 @@
                         <a-button type="primary">
                           <!--跳转到修改页面-->
                             <!--传入账单信息-->
-                          <router-link :to="'/update?userId='+record.id">
+                          <router-link :to="'/user-update?userId='+record.id">
                             修改
                           </router-link>
                         </a-button>
@@ -88,8 +95,8 @@
         },
         {
             title: '出生日期',
-            dataIndex: 'birthday',
-            key: 'birthday',
+            dataIndex: 'birthdayStr',
+            key: 'birthdayStr',
         },
         {
             title: '电话',

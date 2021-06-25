@@ -19,6 +19,7 @@ import travelManagement.util.SnowFlake;
 import travelManagement.util.StringUtil;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -38,6 +39,8 @@ public class UserServiceImpl implements UserService {
     private TabUserMapper tabUserMapper;
 
     private static final Logger LOG= LoggerFactory.getLogger(UserServiceImpl.class);
+
+    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 
     @Override
@@ -65,6 +68,9 @@ public class UserServiceImpl implements UserService {
         PageInfo<TabUser> pageInfo = new PageInfo<>(users);
 
         List<UserQueryResp> userQueryResps = CopyUtil.copyList(users, UserQueryResp.class);
+        for (UserQueryResp userQueryResp : userQueryResps) {
+            userQueryResp.setBirthdayStr(sdf.format(userQueryResp.getBirthday()));
+        }
 
         PageResp pageResp = new PageResp();
         pageResp.setTotal(pageInfo.getTotal());
