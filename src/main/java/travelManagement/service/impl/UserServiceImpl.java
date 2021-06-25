@@ -98,4 +98,12 @@ public class UserServiceImpl implements UserService {
             tabUserMapper.updateByPrimaryKeySelective(copy);
         }
     }
+
+    @Override
+    public UserQueryResp selectById(Long id) {
+        TabUser tabUser = tabUserMapper.selectByPrimaryKey(id);
+        UserQueryResp copy = CopyUtil.copy(tabUser, UserQueryResp.class);
+        copy.setBirthdayStr(sdf.format(copy.getBirthday()));
+        return copy;
+    }
 }

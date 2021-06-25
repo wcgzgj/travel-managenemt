@@ -3,6 +3,7 @@ package travelManagement.service;
 import travelManagement.req.UserQueryReq;
 import travelManagement.req.UserSaveReq;
 import travelManagement.resp.PageResp;
+import travelManagement.resp.UserQueryResp;
 
 public interface UserService {
 
@@ -11,5 +12,7 @@ public interface UserService {
     void deleteById(Long id);
 
     void save(UserSaveReq req);
+
+    UserQueryResp selectById(Long id);
 
 }
