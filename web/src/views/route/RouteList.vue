@@ -7,26 +7,40 @@
         <h1 style="font-size: 30px">路线管理</h1>
 
         线路名称:
-        <a-input v-model:value="searchRoute.name" placeholder="线路名称" style="width: 140px"/>
+        <a-input v-model:value="searchRoute.rname" placeholder="线路名称" style="width: 140px"/>
 
         &nbsp;
         &nbsp;
 
         线路介绍:
-        <a-input v-model:value="searchRoute.email" placeholder="线路介绍" style="width: 140px"/>
+        <a-input v-model:value="searchRoute.routeintroduce" placeholder="线路介绍" style="width: 140px"/>
 
         &nbsp;
         &nbsp;
 
         所属分类:
-        <a-input v-model:value="searchRoute.email" placeholder="线路介绍" style="width: 140px"/>
+        <a-select
+                v-model:value="searchRoute.cid"
+                style="width: 140px"
+                @focus="focus"
+                ref="select"
+        >
+            <a-select-option v-for="category in categorys" :value="category.cid">{{category.cname}}</a-select-option>
+        </a-select>
 
 
         &nbsp;
         &nbsp;
 
         旅游公司:
-        <a-input v-model:value="searchRoute.email" placeholder="线路介绍" style="width: 140px"/>
+        <a-select
+                v-model:value="searchRoute.sid"
+                style="width: 140px"
+                @focus="focus"
+                ref="select"
+        >
+            <a-select-option v-for="seller in sellers" :value="seller.sid">{{seller.sname}}</a-select-option>
+        </a-select>
 
         &nbsp;
         &nbsp;
@@ -154,8 +168,14 @@
              * 用户查询信息
              */
             const searchRoute = ref({
-                name:"",
-                email:"",
+                /**
+                 * private String rname;
+                    private String routeintroduce;
+                 */
+                rname:"",
+                routeintroduce:"",
+                cid:"",
+                sid:"",
                 pageNum:1,
                 pageSize:5
             });
@@ -165,8 +185,10 @@
              * 点击以后，会去重置输入框中的内容
              */
             const reset = () => {
-                searchRoute.value.name="";
-                searchRoute.value.email="";
+                searchRoute.value.rname="";
+                searchRoute.value.routeintroduce="";
+                searchRoute.value.sid="";
+                searchRoute.value.cid="";
             }
 
             /**
@@ -193,10 +215,14 @@
                     params:{
                         pageNum:searchRoute.value.pageNum,
                         pageSize:searchRoute.value.pageSize,
-                        name:searchRoute.value.name,
-                        email:searchRoute.value.email
+                        rname:searchRoute.value.rname,
+                        routeintroduce:searchRoute.value.routeintroduce,
+                        cid:searchRoute.value.cid,
+                        sid:searchRoute.value.sid
                     }
                 }).then(resp=> {
+                    console.log("传入的cid为:"+searchRoute.value.cid);
+                    console.log("传入的sid为:"+searchRoute.value.sid);
                     const data = resp.data;
                     if (data.success) {
                         console.log("查询数据成功");
@@ -205,6 +231,41 @@
                         console.log("传来的total值为:"+data.content.total);
                         // 修改分页信息中的 total 信息
                         pagination.value.total=data.content.total;
+                    } else {
+                        message.error(data.message);
+                    }
+                })
+            }
+
+
+            /**
+             * 获取所有的分类
+             */
+            const categorys = ref([]);
+            const getCategorys = () => {
+                axios.get("/category/getAll").then(resp=> {
+                    const data = resp.data;
+                    if (data.success) {
+                        console.log("查询数据成功");
+                        console.log("查询出的数据条数为:"+data.content.length);
+                        categorys.value=data.content;
+                    } else {
+                        message.error(data.message);
+                    }
+                })
+            }
+
+            /**
+             * 获取所有的旅行社
+             */
+            const sellers = ref([]);
+            const getSellers = () => {
+                axios.get("/seller/getAll").then(resp=> {
+                    const data = resp.data;
+                    if (data.success) {
+                        console.log("查询数据成功");
+                        console.log("查询出的数据条数为:"+data.content.length);
+                        sellers.value=data.content;
                     } else {
                         message.error(data.message);
                     }
@@ -264,6 +325,8 @@
              */
             onMounted(()=>{
                 onSearch(1);
+                getCategorys();
+                getSellers();
             });
 
             return {
@@ -273,7 +336,11 @@
                 reset,
                 routes,
                 columns,
-                onSearch
+                onSearch,
+                categorys,
+                sellers,
+                getSellers,
+                getCategorys
             };
         },
     }

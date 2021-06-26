@@ -5,6 +5,8 @@ import travelManagement.req.CategorySaveReq;
 import travelManagement.resp.PageResp;
 import travelManagement.resp.CategoryQueryResp;
 
+import java.util.List;
+
 public interface CategoryService {
 
     PageResp list(CategoryQueryReq req);
@@ -14,5 +16,7 @@ public interface CategoryService {
     void save(CategorySaveReq req);
 
     CategoryQueryResp selectById(Long id);
+
+    List<CategoryQueryResp> getAll();
 
 }

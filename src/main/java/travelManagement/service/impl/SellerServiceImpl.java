@@ -6,10 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import travelManagement.mapper.TabSellerMapper;
+import travelManagement.pojo.TabCategory;
 import travelManagement.pojo.TabSeller;
 import travelManagement.pojo.TabSellerExample;
 import travelManagement.req.SellerQueryReq;
 import travelManagement.req.SellerSaveReq;
+import travelManagement.resp.CategoryQueryResp;
 import travelManagement.resp.SellerQueryResp;
 import travelManagement.resp.PageResp;
 import travelManagement.service.SellerService;
@@ -98,5 +100,13 @@ public class SellerServiceImpl implements SellerService {
         TabSeller tabSeller = tabSellerMapper.selectByPrimaryKey(id);
         SellerQueryResp copy = CopyUtil.copy(tabSeller, SellerQueryResp.class);
         return copy;
+    }
+
+
+    @Override
+    public List<SellerQueryResp> getAll() {
+        List<TabSeller> tabCategories = tabSellerMapper.selectByExample(null);
+        List<SellerQueryResp> sellerQueryResps = CopyUtil.copyList(tabCategories, SellerQueryResp.class);
+        return sellerQueryResps;
     }
 }

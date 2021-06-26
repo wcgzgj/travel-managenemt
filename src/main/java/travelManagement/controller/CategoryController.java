@@ -10,9 +10,11 @@ import travelManagement.req.CategoryQueryReq;
 import travelManagement.resp.CommonResp;
 import travelManagement.resp.PageResp;
 import travelManagement.resp.CategoryQueryResp;
+import travelManagement.resp.SellerQueryResp;
 import travelManagement.service.CategoryService;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @ClassName CategoryController
@@ -48,6 +50,15 @@ public class CategoryController {
         CategoryQueryResp categoryQueryResp = categoryService.selectById(categoryId);
         CommonResp commonResp = new CommonResp();
         commonResp.setContent(categoryQueryResp);
+        return commonResp;
+    }
+
+
+    @GetMapping("/getAll")
+    public CommonResp getAll() {
+        CommonResp commonResp = new CommonResp();
+        List<CategoryQueryResp> all = categoryService.getAll();
+        commonResp.setContent(all);
         return commonResp;
     }
 }

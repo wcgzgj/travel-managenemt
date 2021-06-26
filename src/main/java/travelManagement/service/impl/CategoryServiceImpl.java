@@ -88,4 +88,11 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryQueryResp copy = CopyUtil.copy(tabCategory, CategoryQueryResp.class);
         return copy;
     }
+
+    @Override
+    public List<CategoryQueryResp> getAll() {
+        List<TabCategory> tabCategories = tabCategoryMapper.selectByExample(null);
+        List<CategoryQueryResp> categoryQueryResps = CopyUtil.copyList(tabCategories, CategoryQueryResp.class);
+        return categoryQueryResps;
+    }
 }

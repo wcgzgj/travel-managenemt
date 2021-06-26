@@ -14,6 +14,7 @@ import travelManagement.resp.SellerQueryResp;
 import travelManagement.service.SellerService;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @ClassName SellerController
@@ -49,6 +50,14 @@ public class SellerController {
         SellerQueryResp sellerQueryResp = sellerService.selectById(sellerId);
         CommonResp commonResp = new CommonResp();
         commonResp.setContent(sellerQueryResp);
+        return commonResp;
+    }
+
+    @GetMapping("/getAll")
+    public CommonResp getAll() {
+        CommonResp commonResp = new CommonResp();
+        List<SellerQueryResp> all = sellerService.getAll();
+        commonResp.setContent(all);
         return commonResp;
     }
 }

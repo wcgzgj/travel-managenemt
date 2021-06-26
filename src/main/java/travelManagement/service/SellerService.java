@@ -2,8 +2,11 @@ package travelManagement.service;
 
 import travelManagement.req.SellerQueryReq;
 import travelManagement.req.SellerSaveReq;
+import travelManagement.resp.CategoryQueryResp;
 import travelManagement.resp.SellerQueryResp;
 import travelManagement.resp.PageResp;
+
+import java.util.List;
 
 public interface SellerService {
 
@@ -15,4 +18,5 @@ public interface SellerService {
 
     SellerQueryResp selectById(Long id);
 
+    List<SellerQueryResp> getAll();
 }

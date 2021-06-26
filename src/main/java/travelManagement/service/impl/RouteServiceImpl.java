@@ -23,6 +23,7 @@ import travelManagement.util.StringUtil;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
+import java.util.FormatFlagsConversionMismatchException;
 import java.util.List;
 
 /**
@@ -81,6 +82,8 @@ public class RouteServiceImpl implements RouteService {
 
         PageHelper.startPage(pageNum,pageSize);
         List<TabRoute> routes = tabRouteMapper.selectByExample(tabRouteExample);
+        LOG.info("查询出出路线列表为:{}",routes);
+
         PageInfo<TabRoute> pageInfo = new PageInfo<>(routes);
 
         List<RouteQueryResp> routeQueryResps = CopyUtil.copyList(routes, RouteQueryResp.class);
