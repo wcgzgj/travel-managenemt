@@ -1,0 +1,2 @@
+insert  into `tab_route`(`rid`,`rname`,`price`,`routeIntroduce`,`rflag`,`rdate`,`isThemeTour`,`count`,`cid`,`rimage`,`sid`,`sourceId`,`is_theme_tour`,`route_introduce`,`source_id`) values
+(8921,'迪士尼哈哈哈',999,'走进【宁夏沙坡头】，感受西北大漠风情、体会“大漠孤烟直，长河落日圆”的塞上风光！','1','2018-02-09 01:13:16','0',0,5,'m304b69a4c8328f7d6b8d5dadef020fe07.jpg',1,'23677',NULL,NULL,NULL);

@@ -2,11 +2,9 @@ package travelManagement.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import travelManagement.req.RouteQueryReq;
+import travelManagement.req.RouteSaveReq;
 import travelManagement.resp.CommonResp;
 import travelManagement.resp.PageResp;
 import travelManagement.resp.RouteQueryResp;
@@ -49,5 +47,13 @@ public class RouteController {
         CommonResp commonResp = new CommonResp();
         commonResp.setContent(routeQueryResp);
         return commonResp;
+    }
+
+
+    @PostMapping("/save")
+    public CommonResp save(@RequestBody RouteSaveReq req) {
+        LOG.info("待保存的值为:{}",req);
+        routeService.save(req);
+        return new CommonResp();
     }
 }

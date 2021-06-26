@@ -114,10 +114,12 @@ public class RouteServiceImpl implements RouteService {
     public void save(RouteSaveReq req) {
         Long id = req.getRid();
         if (id==null) {
+            LOG.info("没有主键，准备插入");
             TabRoute copy = CopyUtil.copy(req, TabRoute.class);
             copy.setRid(snowFlake.nextId());
             tabRouteMapper.insert(copy);
         } else {
+            LOG.info("有主键，执行更新");
             TabRoute copy = CopyUtil.copy(req, TabRoute.class);
             tabRouteMapper.updateByPrimaryKeySelective(copy);
         }
