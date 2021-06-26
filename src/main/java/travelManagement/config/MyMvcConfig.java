@@ -32,10 +32,10 @@ public class MyMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         LOG.info("外部尝试访问磁盘图片");
-        registry.addResourceHandler("/pic-db/**").addResourceLocations("file:"+DIS_PATH);
+        registry.addResourceHandler("/travel-img/**").addResourceLocations("file:"+DIS_PATH);
 
         /**
-         * http://127.0.0.1:8880/pic-db/1.jpg
+         * http://127.0.0.1:8880/travel-img/1.jpg
          * 一旦有上面形式的访问路径
          * 就会向用户回显磁盘中的信息
          */

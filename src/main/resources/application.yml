@@ -23,5 +23,5 @@ mybatis:
 
 
 file:
-  dis-path: /Users/faro_z/Pictures/pic-db/
-  web-path: http://127.0.0.1:8880/pic-db/
+  dis-path: /Users/faro_z/Pictures/travel-img/small/
+  web-path: http://127.0.0.1:8880/travel-img/
